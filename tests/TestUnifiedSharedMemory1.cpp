@@ -13,6 +13,8 @@ int runtest() {
 int main(int argv) {
   int res = 0;
 
+  omp_set_default_device(0);
+
 #pragma omp requires(unified_shared_memory)
 
 #pragma omp target 

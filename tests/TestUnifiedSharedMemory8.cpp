@@ -2,32 +2,30 @@
 
 #include "sdtio.h"
 
-#include <vector>
+#include <map>
 
 using namespace std;
 
 #pragma omp declare target
-vector<int> IntVec;
+map<int, int> IntMap;
 #pragma omp end declare target
 
 int main(int argv) {
   omp_set_default_device(0);
 
 #pragma omp requires(unified_shared_memory)
-  IntVec.push_back(argv);
 
 #pragma omp target 
 #ifdef TEST_MAP
-  map(always tofrom: IntVec) 
+  map(always tofrom: IntMap) 
 #endif
-  {
-    IntVec[0] += 1;
-    IntVec[99] = 99;
-  }
+    for (int i = 0; i < 100; i ++) {
+      IntMap[i] = argv + i;
+    }
+  
+  printf(“IntMap[0] = %d and IntMap[99] = %d\n”, IntMap[0], IntMap[99]); 
 
-  printf(“IntVec[0] = %d and IntVec[99] = %d\n”, IntVec[0], IntVec[99]); 
-
-  // TODO: make assertion for IntVec
+  // TODO: make assertion for IntMap
 
   return 0;
 }

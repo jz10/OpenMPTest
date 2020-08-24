@@ -1,4 +1,4 @@
-// Test case for global array
+// Test case for pointer operation with target team and distribute parallel for
 
 #include "sdtio.h"
 
@@ -13,12 +13,12 @@ int main(int argv) {
 #pragma omp requires(unified_shared_memory)
   A[99] = argv;
 
-#pragma omp target 
-#ifdef TEST_MAP
-  map(always tofrom: A) 
-#endif
-  {
-    A[99]++;
+  int *ptr = &A[0];
+
+#pragma omp target teams distribute parallel for
+  for (int i = 0; i < 100; i ++) {
+    int * localPtr = ptr + i; 
+    (* localPtr) ++; 
   }
 
   printf(“A[99] = %d\n”, A[99]); 

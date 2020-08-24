@@ -14,6 +14,8 @@ struct CustomizedDataStructure {
 #pragma omp end declare target
 
 int main(int argv) {
+  omp_set_default_device(0);
+
 #pragma omp requires(unified_shared_memory)
   A[99].x = argv ++;
   A[99].y = argv;
