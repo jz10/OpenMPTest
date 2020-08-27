@@ -1,6 +1,6 @@
 // Test case for std data structure
 
-#include "sdtio.h"
+#include "stdio.h"
 
 #include <vector>
 
@@ -10,10 +10,10 @@ using namespace std;
 vector<int> IntVec;
 #pragma omp end declare target
 
-int main(int argv) {
-  omp_set_default_device(0);
+int main(int argv, char** argc) {
+  // omp_set_default_device(0);
 
-#pragma omp requires(unified_shared_memory)
+#pragma omp requires unified_shared_memory 
   IntVec.push_back(argv);
 
 #pragma omp target 
@@ -25,7 +25,7 @@ int main(int argv) {
     IntVec[99] = 99;
   }
 
-  printf(“IntVec[0] = %d and IntVec[99] = %d\n”, IntVec[0], IntVec[99]); 
+  printf("IntVec[0] = %d and IntVec[99] = %d\n", IntVec[0], IntVec[99]); 
 
   // TODO: make assertion for IntVec
 

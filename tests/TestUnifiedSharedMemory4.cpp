@@ -1,6 +1,6 @@
 // Test case for std data structure
 
-#include "sdtio.h"
+#include "stdio.h"
 
 #include <vector>
 
@@ -14,9 +14,9 @@ struct CustomizedDataStructure {
 #pragma omp end declare target
 
 int main(int argv) {
-  omp_set_default_device(0);
+  // omp_set_default_device(0);
 
-#pragma omp requires(unified_shared_memory)
+#pragma omp requires unified_shared_memory
   A[99].x = argv ++;
   A[99].y = argv;
 
@@ -32,7 +32,7 @@ int main(int argv) {
     ptr->y ++;
   }
 
-  printf(“A[99].x = %d and A[99].y = %d\n”, A[99].x, A[99].y); 
+  printf("A[99].x = %d and A[99].y = %d\n", A[99].x, A[99].y); 
 
   // TODO: make assertion for A
 
