@@ -10,7 +10,7 @@ END PROGRAM Test_OMP_Unified_Shared_Memory
 
 FUNCTION Test_Function(x,y,z)
   IMPLICIT NONE
-!$OMP REQUIRES UNIFIED_SHARED_MEMORY
+  !$OMP REQUIRES UNIFIED_SHARED_MEMORY
   REAL :: Test_Function            ! function type 
   REAL, INTENT( IN ) :: x, y, z
   REAL :: theta, height

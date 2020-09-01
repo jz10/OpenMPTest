@@ -2,25 +2,32 @@
 
 PROGRAM Test_OMP_Unified_Shared_Memory
   IMPLICIT NONE
-
-  !$OMP REQUIRES UNIFIED_SHARED_MEMORY 
+  !!$OMP REQUIRES UNIFIED_SHARED_MEMORY               
   INTEGER, PARAMETER :: SIZE = 100
   REAL :: B(SIZE), C(SIZE)
   INTEGER :: i
-  real :: Test_Function, x
+  REAL :: Test_Function, x 
+
+  TYPE TestStruct
+     INTEGER :: i
+     REAL    :: f
+  END TYPE TestStruct
+  
+  TYPE(TestStruct) :: D(SIZE)
 
   DO i = 1, SIZE, 1
      B(i) = i
      C(i) = i
+     D(i)%i = i
+     D(i)%f = i * 0.1
   END DO
 
   x = Test_Function(B, C, SIZE, 10, 10, 10)
   PRINT *, 'Test result:  ', x
 END PROGRAM Test_OMP_Unified_Shared_Memory
 
-function Test_Function(B, C, N, block_size, num_teams, block_threads) !result(sum)
+function Test_Function(B,C,N, block_size, num_teams, block_threads) result(sum)
   implicit none
-  real    :: Test_Function
   real    :: B(N), C(N), sum
   integer :: N, block_size, num_teams, block_threads, i, i0
   
@@ -40,5 +47,4 @@ function Test_Function(B, C, N, block_size, num_teams, block_threads) !result(su
   !$omp end teams
   !$omp end target
   
-  Test_Function = sum
 end function Test_Function
