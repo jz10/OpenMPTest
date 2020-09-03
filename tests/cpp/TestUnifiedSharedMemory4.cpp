@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#pragma omp requires unified_shared_memory
+
 #pragma omp declare target
 struct CustomizedDataStructure {
   int x;
@@ -16,7 +18,7 @@ struct CustomizedDataStructure {
 int main(int argv) {
   // omp_set_default_device(0);
 
-#pragma omp requires unified_shared_memory
+  // #pragma omp requires unified_shared_memory
   A[99].x = argv ++;
   A[99].y = argv;
 

@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#pragma omp requires unified_shared_memory
+
 #pragma omp declare target
 vector<int> IntVec;
 #pragma omp end declare target
@@ -13,7 +15,7 @@ vector<int> IntVec;
 int main(int argv, char** argc) {
   // omp_set_default_device(0);
 
-#pragma omp requires unified_shared_memory 
+  // #pragma omp requires unified_shared_memory 
   IntVec.push_back(argv);
 
 #pragma omp target 

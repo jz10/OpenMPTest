@@ -2,11 +2,13 @@
 
 #include "stdio.h"
 
+#pragma omp requires unified_shared_memory
+
 int main(int argv, char** argc) {
   int N = 100;
   // omp_set_default_device(0);
 
-#pragma omp requires unified_shared_memory
+  // #pragma omp requires unified_shared_memory
   double * data = new double[N]; 
 
 #pragma omp target teams distribute parallel for 

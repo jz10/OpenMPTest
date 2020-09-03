@@ -2,6 +2,8 @@
 
 #include "stdio.h"
 
+#pragma omp requires unified_shared_memory
+
 #pragma omp declare target
 struct CustomizedDataStructure {
   int x;
@@ -12,7 +14,7 @@ struct CustomizedDataStructure {
 int main(int argv, char** argc) {
   // omp_set_default_device(0);
 
-#pragma omp requires unified_shared_memory
+  // #pragma omp requires unified_shared_memory
 
   int data[100];
 
